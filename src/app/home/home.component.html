@@ -39,5 +39,8 @@
 				(click)="openFolder(row)"
 			></tr>
 		</table>
+		<mat-card class="mat-elevation-z8 loading-spinner" *ngIf="loading">
+			<mat-spinner></mat-spinner>
+		</mat-card>
 	</div>
 </div>

@@ -1,5 +1,7 @@
+import { DataSource } from "@angular/cdk/collections";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
+import { MatTableDataSource } from "@angular/material/table";
 
 export interface PeriodicElement {
 	name: string;
@@ -55,21 +57,52 @@ const FILE_TREE_STRUCTURE = [
 })
 export class HomeComponent implements OnInit {
 	displayedColumns: string[] = ["name", "size", "lastModified"];
-	dataSource = FILE_TREE_STRUCTURE;
+	dataSource: any;
+	loading = false;
+	prefix: any[] = [];
 	constructor(private http: HttpClient) {}
 
 	ngOnInit(): void {
-		// Printout the sso query param
-		console.log(window.location.search);
-		this.http.get("http://localhost:3000/s3/list").subscribe((res) => {
-			this.dataSource = (res as any).items as any[];
+		this.loading = true;
+		// this.http.get("http://localhost:3000/s3/list").subscribe((res) => {
+		// 	this.dataSource = (res as any).items;
+		// 	this.loading = false;
+		// });
+		this.http.get("http://localhost:3000/s3/folder").subscribe((res) => {
+			this.dataSource = (res as any).items;
+			this.loading = false;
 		});
 	}
 
 	openFolder(folder: any) {
 		// Update the data source to reflect the new folder
+		// if (!folder.isDir) return;
+		// this.dataSource = folder.items;
+		this.prefix.push(folder.name);
+		let prefix = this.prefix.join("/");
+		this.http
+			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`)
+			.subscribe((res) => {
+				this.dataSource = (res as any).items;
+				console.log(this.dataSource);
+				this.loading = false;
+				this.dataSource.forEach((item: any) => {
+					this.getFolderSize(item);
+				});
+			});
+	}
+
+	getFolderSize(folder: any) {
 		if (!folder.isDir) return;
-		this.dataSource = folder.items;
+		let prefix = this.prefix.join("/");
+		this.http
+			.get(
+				`http://localhost:3000/s3/folder/size?prefix=${prefix}/${folder.name}`
+			)
+			.subscribe((res) => {
+				folder.size = (res as any).size;
+				console.log(folder);
+			});
 	}
 
 	convertByteToMB(byte: number) {
