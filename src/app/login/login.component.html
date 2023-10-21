@@ -1,0 +1,98 @@
+<div class="login-wrapper">
+	<mat-card class="login-box">
+		<mat-card-header>
+			<mat-card-title>
+				<h4>Login</h4>
+			</mat-card-title>
+		</mat-card-header>
+		<mat-card-content style="height: 100%">
+			<div class="login-container">
+				<!-- Left side for email login -->
+				<div class="left-side">
+					<div class="header">
+						<p>Login with Email</p>
+					</div>
+					<form
+						[formGroup]="loginForm"
+						(ngSubmit)="onSubmit()"
+						class="email-login"
+					>
+						<mat-form-field>
+							<input
+								matInput
+								placeholder="Email"
+								formControlName="email"
+								required
+							/>
+							<mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+								Email is <strong>required</strong>
+							</mat-error>
+							<mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+								Please enter a valid email address
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<input
+								matInput
+								placeholder="Password"
+								formControlName="password"
+								type="password"
+								#passwordInput
+							/>
+							<mat-icon
+								class="password-icon"
+								(click)="togglePasswordVisibility(passwordInput)"
+							>
+								{{ showPassword ? "visibility" : "visibility_off" }}
+							</mat-icon>
+							<mat-error *ngIf="loginForm.controls['password'].invalid">
+								{{ displayPasswordErrorMessage() }}
+							</mat-error>
+						</mat-form-field>
+						<button
+							mat-raised-button
+							color="primary"
+							type="submit"
+							[disabled]="!loginForm.valid"
+						>
+							Login
+						</button>
+					</form>
+				</div>
+
+				<!-- Vertical Line Separator -->
+				<mat-divider vertical></mat-divider>
+
+				<!-- Right side for SSO options -->
+				<div class="right-side">
+					<div class="header">
+						<p>Sign In With Socials</p>
+					</div>
+					<!-- Add your SSO options here -->
+					<!-- Example: Google SSO button -->
+					<div (click)="onGoogleLogin()" class="google-sign-in" matRipple>
+						<div class="button-content">
+							<img
+								src="../../assets/google-icon.png"
+								alt="Google Icon"
+								class="google-icon"
+							/>
+							<span> Sign in with Google </span>
+						</div>
+					</div>
+					<!-- Add more SSO options as needed -->
+					<div (click)="onGoogleLogin()" class="apple-sign-in" matRipple>
+						<div class="button-content">
+							<img
+								src="../../assets/apple-icon.png"
+								alt="Google Icon"
+								class="google-icon"
+							/>
+							<span> Sign in with Apple </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</mat-card-content>
+	</mat-card>
+</div>

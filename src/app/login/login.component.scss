@@ -1,0 +1,104 @@
+.login-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: #f2f2f2; // Background color for the entire page
+
+	.login-box {
+		width: 700px; // Set a fixed width for the login box
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.login-container {
+		display: flex;
+		border: 1px solid #ccc; // Add a border to separate left and right sides
+
+		.header {
+			font-size: 24px;
+			font-weight: 500;
+			margin-bottom: 16px;
+			text-align: center;
+		}
+		.left-side {
+			flex: 1;
+			padding: 16px;
+			background-color: #fff; // Background color for the left side
+
+			.email-login {
+				display: flex;
+				flex-direction: column;
+			}
+			/* Style the password visibility icon */
+			.password-icon {
+				cursor: pointer;
+				position: absolute;
+				right: 0;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+
+		.right-side {
+			flex: 1;
+			padding: 16px;
+			background-color: #fff; // Background color for the right side
+
+			/* Style the Google SSO button and icon */
+			.google-icon {
+				width: 20px; /* Adjust the size as needed */
+				margin-right: 10px; /* Add some spacing between the icon and text */
+			}
+
+			/* Style the Google SSO button itself */
+			.google-sign-in {
+				cursor: pointer;
+				display: inline-block; /* Display as inline-block to take up only as much space as needed */
+
+				&:hover {
+					background-color: #f7f7f7;
+				}
+
+				&:active {
+					background-color: #f0f0f0;
+				}
+
+				.button-content {
+					display: flex;
+					align-items: center; /* Align the content vertically */
+					background-color: #fff;
+					padding: 10px 20px; /* Adjust padding as needed */
+					color: #4285f4; /* Google's brand color */
+					border: 1px solid #4285f4;
+					border-radius: 4px;
+					transition: background-color 0.3s, color 0.3s, border 0.3s;
+				}
+			}
+
+			/* Style the Apple SSO button and icon */
+			.apple-icon {
+				color: white;
+				width: 20px; /* Adjust the size as needed */
+				margin-right: 10px; /* Add some spacing between the icon and text */
+			}
+
+			/* Style the Apple SSO button itself */
+			.apple-sign-in {
+				cursor: pointer;
+				display: inline-block; /* Display as inline-block to take up only as much space as needed */
+
+				.button-content {
+					display: flex;
+					align-items: center; /* Align the content vertically */
+					background-color: black; /* Apple's brand color */
+					padding: 10px 20px; /* Adjust padding as needed */
+					color: white; /* Text color */
+					border: none;
+					border-radius: 4px;
+					transition: background-color 0.3s;
+				}
+			}
+		}
+	}
+}

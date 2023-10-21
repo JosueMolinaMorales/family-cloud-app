@@ -6,16 +6,22 @@
 		<base href="/" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/x-icon" href="favicon.ico" />
-	  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+	</head>
 	<body class="mat-typography">
 		<script src="https://accounts.google.com/gsi/client" async></script>
 		<div
 			id="g_id_onload"
 			data-client_id="926274650436-bd56c26df0ova35ols9irccmqrjtqa13.apps.googleusercontent.com"
-			data-login_uri="http://localhost:3000/auth/google/sso"
+			data-login_uri="https://family-cloud.auth.us-east-1.amazoncognito.com?response_type=code&client_id=5hi57crpb1f2he046kf8dabc6c&redirect_uri=http://localhost:3000/auth/cognito/callback&identity_provider=Google"
 			data-auto_prompt="false"
 		></div>
 		<app-root></app-root>
