@@ -1,4 +1,13 @@
 <div class="wrapper">
+	<!-- Breadcrumb navigation -->
+	<div class="breadcrumb">
+		<span (click)="goBack()" *ngIf="path.length > 0">Go Back</span>
+		<ng-container *ngFor="let directory of path">
+			<span (click)="navigateTo(directory)">
+				{{ directory }}
+			</span>
+		</ng-container>
+	</div>
 	<div class="table-wrapper">
 		<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 			<!-- Name Column -->

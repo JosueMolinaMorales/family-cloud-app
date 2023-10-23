@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit {
 	dataSource: any;
 	loading = false;
 	prefix: any[] = [];
+	// Array to store the navigation path
+	path: string[] = [];
 	constructor(private http: HttpClient) {}
 
 	ngOnInit(): void {
@@ -74,12 +76,49 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
+	// Function to go back in the file tree
+	goBack() {
+		if (this.path.length > 0) {
+			this.path.pop(); // Remove the last element (current directory)
+			this.updateData();
+		}
+	}
+
+	// Function to update the data source based on the current path
+	updateData() {
+		const prefix = this.path.join("/");
+		this.http
+			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`)
+			.subscribe((res) => {
+				this.dataSource = (res as any).items;
+				this.loading = false;
+				this.dataSource.forEach((item: any) => {
+					this.getFolderSize(item);
+				});
+			});
+	}
+
+	/**
+	 * Navigate to a folder in the path stack
+	 * @param folder The folder to navigate to
+	 * @returns
+	 */
+	navigateTo(folder: string) {
+		// pop all the folders until the current folder
+		console.log(this.path);
+		console.log(folder);
+		let index = this.path.indexOf(folder);
+		console.log(index);
+		if (index === -1) return;
+		this.path.splice(index + 1);
+		this.updateData();
+	}
+
 	openFolder(folder: any) {
 		// Update the data source to reflect the new folder
-		// if (!folder.isDir) return;
-		// this.dataSource = folder.items;
-		this.prefix.push(folder.name);
-		let prefix = this.prefix.join("/");
+		if (!folder.isDir) return;
+		this.path.push(folder.name);
+		let prefix = this.path.join("/");
 		this.http
 			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`)
 			.subscribe((res) => {
