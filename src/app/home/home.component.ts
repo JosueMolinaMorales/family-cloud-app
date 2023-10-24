@@ -70,10 +70,12 @@ export class HomeComponent implements OnInit {
 		// 	this.dataSource = (res as any).items;
 		// 	this.loading = false;
 		// });
-		this.http.get("http://localhost:3000/s3/folder").subscribe((res) => {
-			this.dataSource = (res as any).items;
-			this.loading = false;
-		});
+		this.http
+			.get("http://localhost:3000/s3/folder", { withCredentials: true })
+			.subscribe((res) => {
+				this.dataSource = (res as any).items;
+				this.loading = false;
+			});
 	}
 
 	// Function to go back in the file tree
@@ -88,7 +90,9 @@ export class HomeComponent implements OnInit {
 	updateData() {
 		const prefix = this.path.join("/");
 		this.http
-			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`)
+			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`, {
+				withCredentials: true,
+			})
 			.subscribe((res) => {
 				this.dataSource = (res as any).items;
 				this.loading = false;
@@ -120,7 +124,9 @@ export class HomeComponent implements OnInit {
 		this.path.push(folder.name);
 		let prefix = this.path.join("/");
 		this.http
-			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`)
+			.get(`http://localhost:3000/s3/folder?prefix=${prefix}`, {
+				withCredentials: true,
+			})
 			.subscribe((res) => {
 				this.dataSource = (res as any).items;
 				console.log(this.dataSource);
@@ -136,7 +142,8 @@ export class HomeComponent implements OnInit {
 		let prefix = this.prefix.join("/");
 		this.http
 			.get(
-				`http://localhost:3000/s3/folder/size?prefix=${prefix}/${folder.name}`
+				`http://localhost:3000/s3/folder/size?prefix=${prefix}/${folder.name}`,
+				{ withCredentials: true }
 			)
 			.subscribe((res) => {
 				folder.size = (res as any).size;
