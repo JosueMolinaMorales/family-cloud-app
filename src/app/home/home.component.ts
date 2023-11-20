@@ -78,6 +78,29 @@ export class HomeComponent implements OnInit {
 			});
 	}
 
+	uploadFile(event: any) {
+		console.log(event.target.files);
+		// get presigned url from server
+		this.http
+			.post(
+				"http://localhost:3000/s3/upload",
+				{
+					file: event.target.files[0].name,
+				},
+				{ withCredentials: true }
+			)
+			.subscribe((res) => {
+				console.log(res);
+				const presignedUrl = (res as any).url;
+				const file = event.target.files[0];
+				const formData = new FormData();
+				formData.append("file", file);
+				this.http
+					.put(presignedUrl, formData)
+					.subscribe((res) => console.log(res));
+			});
+	}
+
 	// Function to go back in the file tree
 	goBack() {
 		if (this.path.length > 0) {

@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatDividerModule } from "@angular/material/divider";
+import { NgxUploaderModule } from "ngx-uploader";
 
 @NgModule({
 	declarations: [AppComponent, HomeComponent, LoginComponent],
@@ -34,6 +35,7 @@ import { MatDividerModule } from "@angular/material/divider";
 		MatButtonModule,
 		MatRippleModule,
 		MatDividerModule,
+		NgxUploaderModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
