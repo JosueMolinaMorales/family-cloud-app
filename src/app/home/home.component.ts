@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
 	prefix: any[] = [];
 	// Array to store the navigation path
 	path: string[] = [];
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	ngOnInit(): void {
 		this.loading = true;
@@ -143,7 +143,10 @@ export class HomeComponent implements OnInit {
 
 	openFolder(folder: any) {
 		// Update the data source to reflect the new folder
-		if (!folder.isDir) return;
+		if (!folder.isDir) {
+			this.downloadFile(folder);
+			return;
+		};
 		this.path.push(folder.name);
 		let prefix = this.path.join("/");
 		this.http
@@ -157,6 +160,21 @@ export class HomeComponent implements OnInit {
 				this.dataSource.forEach((item: any) => {
 					this.getFolderSize(item);
 				});
+			});
+	}
+
+	downloadFile(file: any) {
+		if (file.isDir) return;
+		let prefix = this.path.join("/");
+		let key = prefix.length > 0 ? `${prefix}/${file.name}` : file.name;
+		this.http
+			.get(
+				`http://localhost:3000/s3/download?key=${key}`,
+				{ withCredentials: true }
+			)
+			.subscribe((res) => {
+				let url = (res as any).url;
+				window.open(url, "_blank");
 			});
 	}
 
